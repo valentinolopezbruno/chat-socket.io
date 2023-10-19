@@ -22,13 +22,26 @@ io.on("connection", socket => {
     // Cada socket tiene un ID
     console.log("Cliente Conectado, ID: ", socket.id)
 
+    socket.on("usuarioBack", (data) => {
+        // Le asigno un nombre de usuario al socket.id
+        console.log("Usuario: ", data)
+        // io.emit hace que TODOS los usuarios reciban la alerta de que alguien entro al chat, es decir
+        // alguien entro a la url y por lo tanto se lo envio al front.
+        io.emit("usuarioFront", {
+            nombre: data,
+            from: socket.id,
+            mensajes:[]
+        })
+    })
+
     // Recibo los datos desde el front con "mensajeBack, como nombre del evento"
     // se llama mensajeBack porque el backend es quien lo recibe.
     socket.on("mensajeBack", (data) => {
         // Esto se lo estoy enviando nuevamente al front
         socket.broadcast.emit("mensajeFront", {
-            body: data,
-            from: socket.id.slice(6)
+            body: data.mensaje,
+            from: data.destinatario,
+            emisor: data.emisor
         })
     })
 })

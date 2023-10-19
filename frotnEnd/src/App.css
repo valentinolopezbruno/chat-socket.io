@@ -1,0 +1,15 @@
+@keyframes galaxy {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 10000px 10000px;
+    }
+  }
+  
+  .bg-galaxy-animation {
+    background: url('ruta-a-tu-imagen-galaxia.jpg');
+    background-size: cover;
+    animation: galaxy 50s linear infinite;
+  }
+  
